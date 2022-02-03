@@ -1,0 +1,30 @@
+  powervm_lpar_instance:
+    hmc_host: '{{ inventory_hostname }}'
+    hmc_auth:
+      username: '{{hmc_user}}'
+      password: '{{hmc_pass}}'
+    system_name: '{{item.frame}}'
+    vm_name: '{{item.name}}'
+    proc: '{{item.virtualcpu}}'
+    proc_unit: '{{item.physicalcpu}}'
+    mem: '{{item.memory}}'
+    max_virtual_slots: '{{item.max_virtual_slots}}'
+    virt_network_config:
+      - network_name: '{{item.netname}}-{{item.virtual_switch}}'
+        slot_number: '{{item.virtual_slot}}'
+      - network_name: '{{item.netname1}}-{{item.virtual_switch}}'
+        slot_number: '{{item.virtual_slot1}}'
+      - network_name: '{{item.netname2}}-{{item.virtual_switch}}'
+        slot_number: '{{item.virtual_slot2}}'
+    npiv_config:
+         - vios_name: '{{item.viosname}}'
+           fc_port: '{{item.fcport}}'
+         - vios_name: '{{item.viosname}}'
+           fc_port: '{{item.fcport1}}'
+         - vios_name: '{{item.viosname1}}'
+           fc_port: '{{item.fcport2}}'
+         - vios_name: '{{item.viosname1}}'
+           fc_port: '{{item.fcport3}}'
+    os_type: '{{item.os_type}}'
+    state: present
+  loop: '{{lpar}}'
